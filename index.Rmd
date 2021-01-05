@@ -1,0 +1,386 @@
+---
+title: "You must be plotting something"
+subtitle: "An intro to R data viz in ggplot2"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+```{r, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = F)
+
+library(flipbookr)
+library(tidyverse)
+```
+
+
+
+# Welcome!
+
+This is a short tutorial that will demonstrate some of the principles of plotting several common types of graphs in R using the `ggplot2` package.
+
+Before we begin, install the `tidyverse` package:
+
+* Install the packages using the `Tools` menu and `Install packages...` menu choice 
+
+* Type the name of the package in the dialog box that opens 
+
+Once installed, open the package with the `library()` function, like this: 
+
+```{r eval = FALSE}
+library(package = "tidyverse")
+```
+
+
+---
+
+# The data set
+
+* We will be using a built in data set containing data from Star Wars characters
+
+* Get to know the data by typing and running the name of the data:
+
+```{r}
+starwars
+```
+
+---
+
+# The ggplot package
+
+* Part of the `tidyverse` set of packages 
+
+* `gg` stands for grammar of graphics
+
+* Plots created in `ggplot` are built in layers 
+
+* Let's look at some examples
+
+* First, a bar chart...
+
+---
+
+`r chunk_reveal("my_bar", widths = c(1,1), title = "### Basic bar graph")`
+
+```{r my_bar, include = FALSE}
+starwars %>%
+  ggplot(aes(x = gender)) +
+  geom_bar() 
+```
+
+---
+
+`r chunk_reveal("my_bar_fancy", widths = c(1,1), title = "### Fancy bar graph")`
+
+```{r my_bar_fancy, include = FALSE}
+starwars %>%
+  drop_na(gender) %>% 
+  ggplot(aes(x = gender)) +
+  geom_bar(fill = "#7463AC") +
+  labs(x = "Character Gender",
+       y = "Frequency",
+       title = "Gender of Star Wars Characters") +
+  theme_minimal()
+```
+
+---
+
+# You Try it!
+
+Make a bar graph of the Sex of Star Wars Characters with the Figure 1 code in your R Markdown file.
+
+Note that there is a line of recoding to update some out-of-date terminology.
+
+Edit the code to: 
+
+* Change the color of the bars by replacing #7463AC the name of your favorite color (e.g., orange) or using a color found on the <a href = "https://colorbrewer2.org/">https://colorbrewer2.org/</a> website
+
+* Add labels for the axes and a title inside the quote marks
+
+* Try another theme, you can find them here: https://ggplot2.tidyverse.org/reference/ggtheme.html
+
+When you have completed the changes, click the little green arrow on the top right of the code chunk to run the code.
+
+---
+
+`r chunk_reveal("my_bar_fancy_fig1", widths = c(1,1), title = "### Figure 1 code")`
+
+```{r my_bar_fancy_fig1, include = FALSE}
+starwars %>%
+  drop_na(sex) %>% 
+  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %>% 
+  ggplot(aes(x = sex)) +
+  geom_bar(fill = "deeppink") +
+  labs(x = "Character Sex",
+       y = "Frequency",
+       title = "Sex of Star Wars Characters") +
+  theme_minimal()
+```
+
+---
+
+`r chunk_reveal("my_2var_bar", widths = c(1,1), title = "### Basic stacked bar graph")`
+
+```{r my_2var_bar, include = FALSE}
+starwars %>%
+  drop_na(sex, gender) %>% 
+  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %>% 
+  ggplot(aes(x = gender, fill = sex)) +
+  geom_bar() 
+```
+
+---
+
+`r chunk_reveal("my_2var_bar_col", widths = c(1,1), title = "### Fancy stacked bar graph")`
+
+```{r my_2var_bar_col, include = FALSE}
+starwars %>%
+  drop_na(sex, gender) %>% 
+  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %>% 
+  ggplot(aes(x = gender, fill = sex)) +
+  geom_bar() +
+  scale_fill_brewer(palette = 'Set1', name = "Character Sex") +
+  labs(x = "Character Gender",
+       y = "Frequency",
+       title = "Sex and Gender of Star Wars Characters") +
+  theme_minimal()
+```
+
+---
+
+`r chunk_reveal("my_2var_bar_group1", widths = c(1,1), title = "### Fancy grouped bar graph")`
+
+```{r my_2var_bar_group1, include = FALSE}
+starwars %>%
+  drop_na(sex, gender) %>% 
+  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %>% 
+  ggplot(aes(x = gender, fill = sex)) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = 'Set1', name = "Character Sex") + 
+  labs(x = "Character Gender",
+       y = "Frequency",
+       title = "Sex and Gender of Star Wars Characters") +
+  theme_minimal()
+```
+
+---
+
+`r chunk_reveal("my_2var_bar_group", widths = c(1,1), break_type = "rotate", title = "### Fancy grouped bar graph color palettes")`
+
+```{r my_2var_bar_group, include = FALSE}
+starwars %>%
+  drop_na(sex, gender) %>% 
+  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %>% 
+  ggplot(aes(x = gender, fill = sex)) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = 'Set1', name = "Character Sex") + #ROTATE
+  scale_fill_brewer(palette = 'Dark2', name = "Character Sex") + #ROTATE
+  scale_fill_brewer(palette = 'PRGn', name = "Character Sex") + #ROTATE
+  labs(x = "Character Gender",
+       y = "Frequency",
+       title = "Sex and Gender of Star Wars Characters") +
+  theme_minimal()
+```
+
+---
+
+# You Try it!
+
+Customize the bar graph of the Gender and Hair Color of Star Wars Characters with the Figure 2 code in your R Markdown file.
+
+Edit the code to: 
+
+* Change the color of the bars by replacing the palette with a different palette found on the <a href = "http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/">http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/</a> website (bottom of page)
+
+* Add labels for the axes and a title inside the quote marks
+
+* Try another theme, you can find them here: https://ggplot2.tidyverse.org/reference/ggtheme.html
+
+When you have completed the changes, click the little green arrow on the top right of the code chunk to run the code.
+
+---
+
+`r chunk_reveal("my_2var_bar_cont", widths = c(1,1), title = "### Basic means bar graph")`
+
+```{r my_2var_bar_cont, include = FALSE}
+starwars %>%
+  drop_na(height, gender) %>% 
+  group_by(gender) %>% 
+  summarize(meanHt = mean(height)) %>% 
+  ggplot(aes(x = gender, y = meanHt)) +
+  geom_col() 
+```
+
+---
+
+`r chunk_reveal("my_2var_bar_cont_fancy", widths = c(1,1), title = "### Fancy means bar graph")`
+
+```{r my_2var_bar_cont_fancy, include = FALSE}
+starwars %>%
+  drop_na(height, gender) %>% 
+  group_by(gender) %>% 
+  summarize(meanHt = mean(height),
+            sdHt = sd(height)) %>% 
+  ggplot(aes(x = gender, y = meanHt)) +
+  geom_col(fill = "deeppink") +
+  geom_errorbar(aes(ymin = meanHt-sdHt, 
+                    ymax = meanHt+sdHt),
+                position = position_dodge(width = .9),
+                width = .2) +
+  labs(x = "Character Gender",
+       y = "Mean Height (cm)",
+       title = "Mean Height (cm) of Star Wars Characters\nby Gender") +
+  theme_minimal(base_size = 14)
+```
+
+---
+
+# You Try it!
+
+Change the bar graph of the Gender and Height of Star Wars Characters to Gender and Mass with the Figure 3 code in your R Markdown file. First, replace "Height" with "Mass" throughout the code. Make all the changes to labels necessary. Pick a new color and try a different theme.
+
+---
+
+`r chunk_reveal("figure_3", widths = c(1,1), title = "### Fancy means bar graph")`
+
+```{r figure_3, include = FALSE}
+starwars %>%
+  drop_na(mass, gender) %>% 
+  group_by(gender) %>% 
+  summarize(meanMass = mean(mass),
+            sdMass = sd(mass)) %>% 
+  ggplot(aes(x = gender, y = meanMass)) +
+  geom_col(fill = "deeppink") +
+  geom_errorbar(aes(ymin = meanMass-sdMass, 
+                    ymax = meanMass+sdMass),
+                position = position_dodge(width = .9),
+                width = .2) +
+  labs(x = "Character Gender",
+       y = "Mean Mass (kg)",
+       title = "Mean Mass (kg) of Star Wars Characters\nby Gender") +
+  theme_minimal(base_size = 14)
+```
+
+
+---
+
+`r chunk_reveal("my_box", widths = c(1,1), title = "### Basic box plot")`
+
+```{r my_box, include = FALSE}
+starwars %>%
+  drop_na(height, gender) %>% 
+  ggplot(aes(x = gender, y = height)) +
+  geom_boxplot() 
+```
+
+---
+
+`r chunk_reveal("my_box_fancy", widths = c(1,1), title = "### Super fancy layered box plot")`
+
+```{r my_box_fancy, include = FALSE}
+starwars %>%
+  drop_na(height, gender) %>% 
+  ggplot(aes(x = gender, y = height)) +
+  geom_violin(aes(color = gender), fill = "white",
+              alpha = .8) +
+  geom_boxplot(aes(color = gender, fill = gender), 
+               alpha = .3) +
+  geom_jitter(aes(color = gender), alpha = .4) +
+  labs(x = "Character Gender",
+       y = "Height (cm)",
+       title = "Height (cm) of Star Wars Characters by Gender") +
+  scale_color_brewer(palette = "Set2", guide = FALSE) +
+  scale_fill_brewer(palette = "Set2", guide = FALSE) +
+  theme_minimal(base_size = 14)
+```
+
+---
+
+`r chunk_reveal("my_scatter", widths = c(1,1), title = "### Basic scatter plot")`
+
+```{r my_scatter, include = FALSE}
+starwars %>%
+  drop_na(height, mass) %>% 
+  ggplot(aes(x = height, y = mass)) +
+  geom_point() 
+```
+
+---
+
+`r chunk_reveal("my_scatter_fancy", widths = c(1,1), title = "### Fancy scatter plot")`
+
+```{r my_scatter_fancy, include = FALSE}
+starwars %>%
+  drop_na(height, mass) %>% 
+  ggplot(aes(x = height, y = mass)) +
+  geom_point(color = "dodgerblue2") +
+  geom_smooth(method = "lm", se = FALSE, 
+              color = "orange") +
+  labs(x = "Height (cm)",
+       y = "Mass (kg)",
+       title = "Height and Mass of Star Wars Characters") +
+  theme_bw()
+```
+
+---
+
+`r chunk_reveal("my_scatter_fancier", widths = c(1,1), title = "### Even fancier scatter plot")`
+
+```{r my_scatter_fancier, include = FALSE}
+
+starwars %>%
+  drop_na(height, mass) %>% 
+  ggplot(aes(x = height, y = mass)) +
+  geom_point(color = "dodgerblue2", shape = 18, 
+             size = 4, alpha = .6) + 
+  geom_smooth(method = "lm", se = FALSE, 
+              color = "orange", linetype = "dotdash") +
+  labs(x = "Height (cm)",
+       y = "Mass (kg)",
+       title = "Height and Mass of Star Wars Characters") +
+  theme_bw()
+
+```
+
+---
+
+
+<!-- adjust font size in this css code chunk, currently 80 -->
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+
+code.r.hljs.remark-code{
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+code.r.hljs.remark-code:hover{
+  overflow-x:visible;
+  width: 500px;
+  border-style: solid;
+}
+```
+
+
+
+---
+
+
+
