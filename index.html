@@ -3,7 +3,7 @@
   <head>
     <title>You must be plotting something</title>
     <meta charset="utf-8" />
-    <script src="libs/header-attrs-2.5/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.6/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
@@ -21,33 +21,56 @@ class: center, middle, inverse, title-slide
 
 
 
+## Welcome!
 
+This is a short tutorial that will demonstrate plotting several common types of graphs in R using the `ggplot2` package.
 
-# Welcome!
+To follow along with the workshop in R, you will need to have **already installed** R and R Studio.
 
-This is a short tutorial that will demonstrate some of the principles of plotting several common types of graphs in R using the `ggplot2` package.
+---
 
-Before we begin, install the `tidyverse` package:
+## How to follow along and participate
 
-* Install the packages using the `Tools` menu and `Install packages...` menu choice 
+* Open R Studio
 
-* Type the name of the package in the dialog box that opens 
+    + In R Studio, install the `tidyverse` package using the `Tools` menu and `Install packages...` menu choice 
 
-Once installed, open the package with the `library()` function, like this: 
+    + Type the name of the package, `tidyverse`, in the dialog box that opens
+
+* Open the workshop R Markdown file and click on the little green arrow at the top of code chunk that contains this: 
 
 
 ```r
 library(package = "tidyverse")
 ```
 
+* The arrow will run all the code in that "chunk" of code
+
+* Throughout the workshop you will be able to run the code from the demonstration by clicking the arrow on the top right in the corresponding code chunk
+
+* In between code chunks, you can type as you would in a Word document if you'd like to take notes
+
+* For the exercises you may have to finish the code yourself and then click the arrow to get the anticipated result
 
 ---
 
-# The data set
+## Why are we doing this?
 
-* We will be using a built in data set containing data from Star Wars characters
+&lt;img src="./eda-party.png" width="792" /&gt;
 
-* Get to know the data by typing and running the name of the data:
+---
+
+## The data set
+
+* We will be using a built-in R data set containing data from Star Wars characters
+
+&lt;img src="./yoda-mouth-open.jpg" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Examine the full data set
+
+* Get to know the data by running the code chunk that contains the name of the data:
 
 
 ```r
@@ -74,13 +97,55 @@ starwars
 
 ---
 
-# The ggplot package
+## Exploring the variables in the data set
 
-* Part of the `tidyverse` set of packages 
 
-* `gg` stands for grammar of graphics
+```r
+# change data types &amp; subset data set to remove lists
+starwarsRec &lt;- starwars %&gt;% 
+  mutate_if(is.character, as.factor) %&gt;% 
+  select(-films, -vehicles, -starships)
 
-* Plots created in `ggplot` are built in layers 
+# summarize updated data set
+summary(starwarsRec)
+```
+
+```
+                  name        height           mass           hair_color
+ Ackbar             : 1   Min.   : 66.0   Min.   :  15.00   none   :37  
+ Adi Gallia         : 1   1st Qu.:167.0   1st Qu.:  55.60   brown  :18  
+ Anakin Skywalker   : 1   Median :180.0   Median :  79.00   black  :13  
+ Arvel Crynyd       : 1   Mean   :174.4   Mean   :  97.31   white  : 4  
+ Ayla Secura        : 1   3rd Qu.:191.0   3rd Qu.:  84.50   blond  : 3  
+ Bail Prestor Organa: 1   Max.   :264.0   Max.   :1358.00   (Other): 7  
+ (Other)            :81   NA's   :6       NA's   :28        NA's   : 5  
+   skin_color   eye_color    birth_year                 sex           gender  
+ fair   :17   brown  :21   Min.   :  8.00   female        :16   feminine :17  
+ light  :11   blue   :19   1st Qu.: 35.00   hermaphroditic: 1   masculine:66  
+ dark   : 6   yellow :11   Median : 52.00   male          :60   NA's     : 4  
+ green  : 6   black  :10   Mean   : 87.57   none          : 6                 
+ grey   : 6   orange : 8   3rd Qu.: 72.00   NA's          : 4                 
+ pale   : 5   red    : 5   Max.   :896.00                                     
+ (Other):36   (Other):13   NA's   :44                                         
+     homeworld      species  
+ Naboo    :11   Human   :35  
+ Tatooine :10   Droid   : 6  
+ Alderaan : 3   Gungan  : 3  
+ Coruscant: 3   Kaminoan: 2  
+ Kamino   : 3   Mirialan: 2  
+ (Other)  :47   (Other) :35  
+ NA's     :10   NA's    : 4  
+```
+
+---
+
+## Using the ggplot2 package for plotting
+
+* Part of the `tidyverse` set of packages in R
+
+* `gg` stands for **grammar** of **graphics**
+
+* Plots created in `ggplot2` are built in layers 
 
 * Let's look at some examples
 
@@ -90,7 +155,7 @@ starwars
 
 count: false
  
-### Basic bar graph
+## Basic bar chart
 .panel1-my_bar-auto[
 
 ```r
@@ -122,7 +187,7 @@ count: false
 ---
 count: false
  
-### Basic bar graph
+## Basic bar chart
 .panel1-my_bar-auto[
 
 ```r
@@ -138,7 +203,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic bar graph
+## Basic bar chart
 .panel1-my_bar-auto[
 
 ```r
@@ -187,7 +252,7 @@ starwars %&gt;%
 
 count: false
  
-### Fancy bar graph
+## Fancy bar chart
 .panel1-my_bar_fancy-auto[
 
 ```r
@@ -219,7 +284,7 @@ count: false
 ---
 count: false
  
-### Fancy bar graph
+## Fancy bar chart
 .panel1-my_bar_fancy-auto[
 
 ```r
@@ -252,7 +317,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy bar graph
+## Fancy bar chart
 .panel1-my_bar_fancy-auto[
 
 ```r
@@ -269,7 +334,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy bar graph
+## Fancy bar chart
 .panel1-my_bar_fancy-auto[
 
 ```r
@@ -287,7 +352,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy bar graph
+## Fancy bar chart
 .panel1-my_bar_fancy-auto[
 
 ```r
@@ -308,7 +373,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy bar graph
+## Fancy bar chart
 .panel1-my_bar_fancy-auto[
 
 ```r
@@ -360,9 +425,9 @@ starwars %&gt;%
 
 ---
 
-# You Try it!
+## You Try it!
 
-Make a bar graph of the Sex of Star Wars Characters with the Figure 1 code in your R Markdown file.
+Make a bar chart of the Sex of Star Wars Characters with the Figure 1 code in your R Markdown file.
 
 Note that there is a line of recoding to update some out-of-date terminology.
 
@@ -378,9 +443,15 @@ When you have completed the changes, click the little green arrow on the top rig
 
 ---
 
+## Figure 1 code 
+
+&lt;img src="./this-is-the-way.jpg" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+
 count: false
  
-### Figure 1 code
+## Figure 1 code
 .panel1-my_bar_fancy_fig1-auto[
 
 ```r
@@ -412,7 +483,7 @@ count: false
 ---
 count: false
  
-### Figure 1 code
+## Figure 1 code
 .panel1-my_bar_fancy_fig1-auto[
 
 ```r
@@ -445,13 +516,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Figure 1 code
+## Figure 1 code
 .panel1-my_bar_fancy_fig1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex) %&gt;%
-* mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex"))
+* mutate(sex = recode_factor(sex,
+*                            "hermaphroditic" = "intersex"))
 ```
 ]
  
@@ -479,13 +551,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Figure 1 code
+## Figure 1 code
 .panel1-my_bar_fancy_fig1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
 * ggplot(aes(x = sex))
 ```
 ]
@@ -497,13 +570,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Figure 1 code
+## Figure 1 code
 .panel1-my_bar_fancy_fig1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = sex)) +
 * geom_bar(fill = "deeppink")
 ```
@@ -516,13 +590,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Figure 1 code
+## Figure 1 code
 .panel1-my_bar_fancy_fig1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = sex)) +
   geom_bar(fill = "deeppink") +
 * labs(x = "Character Sex",
@@ -538,13 +613,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Figure 1 code
+## Figure 1 code
 .panel1-my_bar_fancy_fig1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = sex)) +
   geom_bar(fill = "deeppink") +
   labs(x = "Character Sex",
@@ -593,7 +669,7 @@ starwars %&gt;%
 
 count: false
  
-### Basic stacked bar graph
+## Basic stacked bar chart for 2 variables
 .panel1-my_2var_bar-auto[
 
 ```r
@@ -625,7 +701,7 @@ count: false
 ---
 count: false
  
-### Basic stacked bar graph
+## Basic stacked bar chart for 2 variables
 .panel1-my_2var_bar-auto[
 
 ```r
@@ -658,13 +734,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic stacked bar graph
+## Basic stacked bar chart for 2 variables
 .panel1-my_2var_bar-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-* mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex"))
+* mutate(sex = recode_factor(sex,
+*                            "hermaphroditic" = "intersex"))
 ```
 ]
  
@@ -692,13 +769,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic stacked bar graph
+## Basic stacked bar chart for 2 variables
 .panel1-my_2var_bar-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
 * ggplot(aes(x = gender, fill = sex))
 ```
 ]
@@ -710,13 +788,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic stacked bar graph
+## Basic stacked bar chart for 2 variables
 .panel1-my_2var_bar-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
 * geom_bar()
 ```
@@ -761,7 +840,7 @@ starwars %&gt;%
 
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
@@ -793,7 +872,7 @@ count: false
 ---
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
@@ -826,13 +905,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-* mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex"))
+* mutate(sex = recode_factor(sex,
+*                            "hermaphroditic" = "intersex"))
 ```
 ]
  
@@ -860,13 +940,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
 * ggplot(aes(x = gender, fill = sex))
 ```
 ]
@@ -878,13 +959,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
 * geom_bar()
 ```
@@ -897,13 +979,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar() +
 * scale_fill_brewer(palette = 'Set1', name = "Character Sex")
@@ -917,13 +1000,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar() +
   scale_fill_brewer(palette = 'Set1', name = "Character Sex") +
@@ -940,13 +1024,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy stacked bar graph
+## Fancy stacked bar chart for 2 variables
 .panel1-my_2var_bar_col-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar() +
   scale_fill_brewer(palette = 'Set1', name = "Character Sex") +
@@ -996,7 +1081,7 @@ starwars %&gt;%
 
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
@@ -1028,7 +1113,7 @@ count: false
 ---
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
@@ -1061,13 +1146,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-* mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex"))
+* mutate(sex = recode_factor(sex,
+*                            "hermaphroditic" = "intersex"))
 ```
 ]
  
@@ -1095,13 +1181,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
 * ggplot(aes(x = gender, fill = sex))
 ```
 ]
@@ -1113,13 +1200,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
 * geom_bar(position = "dodge")
 ```
@@ -1132,13 +1220,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar(position = "dodge") +
 * scale_fill_brewer(palette = 'Set1', name = "Character Sex")
@@ -1152,13 +1241,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar(position = "dodge") +
   scale_fill_brewer(palette = 'Set1', name = "Character Sex") +
@@ -1175,13 +1265,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group1-auto[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar(position = "dodge") +
   scale_fill_brewer(palette = 'Set1', name = "Character Sex") +
@@ -1231,13 +1322,14 @@ starwars %&gt;%
 
 count: false
  
-### Fancy grouped bar graph color palettes
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group-rotate[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar(position = "dodge") +
 * scale_fill_brewer(palette = 'Set1', name = "Character Sex") +
@@ -1255,13 +1347,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph color palettes
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group-rotate[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar(position = "dodge") +
 * scale_fill_brewer(palette = 'Dark2', name = "Character Sex") +
@@ -1279,13 +1372,14 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy grouped bar graph color palettes
+## Fancy grouped bar chart with color palettes
 .panel1-my_2var_bar_group-rotate[
 
 ```r
 starwars %&gt;%
   drop_na(sex, gender) %&gt;%
-  mutate(sex = recode_factor(sex,"hermaphroditic" = "intersex")) %&gt;%
+  mutate(sex = recode_factor(sex,
+                             "hermaphroditic" = "intersex")) %&gt;%
   ggplot(aes(x = gender, fill = sex)) +
   geom_bar(position = "dodge") +
 * scale_fill_brewer(palette = 'PRGn', name = "Character Sex") +
@@ -1333,9 +1427,9 @@ starwars %&gt;%
 
 ---
 
-# You Try it!
+## You Try it!
 
-Customize the bar graph of the Gender and Hair Color of Star Wars Characters with the Figure 2 code in your R Markdown file.
+Customize the bar chart of the Gender and Hair Color of Star Wars Characters with the Figure 2 code in your R Markdown file.
 
 Edit the code to: 
 
@@ -1349,9 +1443,15 @@ When you have completed the changes, click the little green arrow on the top rig
 
 ---
 
+## Figure 2 code 
+
+&lt;img src="./this-is-the-way.jpg" width="600" style="display: block; margin: auto;" /&gt;
+
+---
+
 count: false
  
-### Basic means bar graph
+## Figure 2 code
 .panel1-my_2var_bar_cont-auto[
 
 ```r
@@ -1383,19 +1483,19 @@ count: false
 ---
 count: false
  
-### Basic means bar graph
+## Figure 2 code
 .panel1-my_2var_bar_cont-auto[
 
 ```r
 starwars %&gt;%
-* drop_na(height, gender)
+* drop_na(species, gender)
 ```
 ]
  
 .panel2-my_2var_bar_cont-auto[
 
 ```
-# A tibble: 78 x 14
+# A tibble: 83 x 14
    name  height  mass hair_color skin_color eye_color birth_year sex   gender
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
  1 Luke…    172    77 blond      fair       blue            19   male  mascu…
@@ -1408,7 +1508,7 @@ starwars %&gt;%
  8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
  9 Bigg…    183    84 black      light      brown           24   male  mascu…
 10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 68 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+# … with 73 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
 ```
 ]
@@ -1416,75 +1516,50 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic means bar graph
+## Figure 2 code
 .panel1-my_2var_bar_cont-auto[
 
 ```r
 starwars %&gt;%
-  drop_na(height, gender) %&gt;%
-* group_by(gender)
+  drop_na(species, gender) %&gt;%
+* ggplot(aes(x = hair_color, fill = gender))
 ```
 ]
  
 .panel2-my_2var_bar_cont-auto[
-
-```
-# A tibble: 78 x 14
-# Groups:   gender [2]
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 68 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
-```
+![](index_files/figure-html/my_2var_bar_cont_auto_03_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
 count: false
  
-### Basic means bar graph
+## Figure 2 code
 .panel1-my_2var_bar_cont-auto[
 
 ```r
 starwars %&gt;%
-  drop_na(height, gender) %&gt;%
-  group_by(gender) %&gt;%
-* summarize(meanHt = mean(height))
+  drop_na(species, gender) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+* geom_bar(position = "dodge")
 ```
 ]
  
 .panel2-my_2var_bar_cont-auto[
-
-```
-# A tibble: 2 x 2
-  gender    meanHt
-  &lt;chr&gt;      &lt;dbl&gt;
-1 feminine    165.
-2 masculine   177.
-```
+![](index_files/figure-html/my_2var_bar_cont_auto_04_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
 count: false
  
-### Basic means bar graph
+## Figure 2 code
 .panel1-my_2var_bar_cont-auto[
 
 ```r
 starwars %&gt;%
-  drop_na(height, gender) %&gt;%
-  group_by(gender) %&gt;%
-  summarize(meanHt = mean(height)) %&gt;%
-* ggplot(aes(x = gender, y = meanHt))
+  drop_na(species, gender) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+  geom_bar(position = "dodge") +
+* scale_fill_brewer(palette = 'Set1', name = "Gender")
 ```
 ]
  
@@ -1495,21 +1570,46 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic means bar graph
+## Figure 2 code
 .panel1-my_2var_bar_cont-auto[
 
 ```r
 starwars %&gt;%
-  drop_na(height, gender) %&gt;%
-  group_by(gender) %&gt;%
-  summarize(meanHt = mean(height)) %&gt;%
-  ggplot(aes(x = gender, y = meanHt)) +
-* geom_col()
+  drop_na(species, gender) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = 'Set1', name = "Gender") +
+* labs(x = "Character Hair Color",
+*      y = "Frequency",
+*      title = "Hair Color and Gender of Star Wars Characters")
 ```
 ]
  
 .panel2-my_2var_bar_cont-auto[
 ![](index_files/figure-html/my_2var_bar_cont_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Figure 2 code
+.panel1-my_2var_bar_cont-auto[
+
+```r
+starwars %&gt;%
+  drop_na(species, gender) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = 'Set1', name = "Gender") +
+  labs(x = "Character Hair Color",
+       y = "Frequency",
+       title = "Hair Color and Gender of Star Wars Characters") +
+* theme_bw()
+```
+]
+ 
+.panel2-my_2var_bar_cont-auto[
+![](index_files/figure-html/my_2var_bar_cont_auto_07_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -1547,15 +1647,15 @@ starwars %&gt;%
 
 count: false
  
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
 
 ```r
 *starwars
 ```
 ]
  
-.panel2-my_2var_bar_cont_fancy-auto[
+.panel2-my_2var_bar_cont1-auto[
 
 ```
 # A tibble: 87 x 14
@@ -1579,8 +1679,296 @@ count: false
 ---
 count: false
  
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+* drop_na(hair_color, gender)
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+
+```
+# A tibble: 78 x 14
+   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+ 2 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 3 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 4 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+ 5 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 6 Bigg…    183    84 black      light      brown           24   male  mascu…
+ 7 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+ 8 Anak…    188    84 blond      fair       blue            41.9 male  mascu…
+ 9 Wilh…    180    NA auburn, g… fair       blue            64   male  mascu…
+10 Chew…    228   112 brown      unknown    blue           200   male  mascu…
+# … with 68 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+```
+]
+
+---
+count: false
+ 
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+  drop_na(hair_color, gender) %&gt;%
+* mutate(hair_color = recode_factor(hair_color,
+*                                   "blond" = "blonde",
+*                                   "brown, grey" = "multiple",
+*                                   "auburn, white" = "multiple",
+*                                   "auburn, grey" = "multiple"))
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+
+```
+# A tibble: 78 x 14
+   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;fct&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke…    172    77 blonde     fair       blue            19   male  mascu…
+ 2 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 3 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 4 Owen…    178   120 multiple   light      blue            52   male  mascu…
+ 5 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 6 Bigg…    183    84 black      light      brown           24   male  mascu…
+ 7 Obi-…    182    77 multiple   fair       blue-gray       57   male  mascu…
+ 8 Anak…    188    84 blonde     fair       blue            41.9 male  mascu…
+ 9 Wilh…    180    NA multiple   fair       blue            64   male  mascu…
+10 Chew…    228   112 brown      unknown    blue           200   male  mascu…
+# … with 68 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+```
+]
+
+---
+count: false
+ 
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+  drop_na(hair_color, gender) %&gt;%
+  mutate(hair_color = recode_factor(hair_color,
+                                    "blond" = "blonde",
+                                    "brown, grey" = "multiple",
+                                    "auburn, white" = "multiple",
+                                    "auburn, grey" = "multiple")) %&gt;%
+* ggplot(aes(x = hair_color, fill = gender))
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+![](index_files/figure-html/my_2var_bar_cont1_auto_04_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+  drop_na(hair_color, gender) %&gt;%
+  mutate(hair_color = recode_factor(hair_color,
+                                    "blond" = "blonde",
+                                    "brown, grey" = "multiple",
+                                    "auburn, white" = "multiple",
+                                    "auburn, grey" = "multiple")) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+* geom_bar(position = "dodge")
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+![](index_files/figure-html/my_2var_bar_cont1_auto_05_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+  drop_na(hair_color, gender) %&gt;%
+  mutate(hair_color = recode_factor(hair_color,
+                                    "blond" = "blonde",
+                                    "brown, grey" = "multiple",
+                                    "auburn, white" = "multiple",
+                                    "auburn, grey" = "multiple")) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+  geom_bar(position = "dodge") +
+* scale_fill_brewer(palette = 'Set1', name = "Gender")
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+![](index_files/figure-html/my_2var_bar_cont1_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+  drop_na(hair_color, gender) %&gt;%
+  mutate(hair_color = recode_factor(hair_color,
+                                    "blond" = "blonde",
+                                    "brown, grey" = "multiple",
+                                    "auburn, white" = "multiple",
+                                    "auburn, grey" = "multiple")) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = 'Set1', name = "Gender") +
+* labs(x = "Character Hair Color",
+*      y = "Frequency",
+*      title = "Hair Color and Gender of Star Wars Characters")
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+![](index_files/figure-html/my_2var_bar_cont1_auto_07_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+  drop_na(hair_color, gender) %&gt;%
+  mutate(hair_color = recode_factor(hair_color,
+                                    "blond" = "blonde",
+                                    "brown, grey" = "multiple",
+                                    "auburn, white" = "multiple",
+                                    "auburn, grey" = "multiple")) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = 'Set1', name = "Gender") +
+  labs(x = "Character Hair Color",
+       y = "Frequency",
+       title = "Hair Color and Gender of Star Wars Characters") +
+* theme_minimal()
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+![](index_files/figure-html/my_2var_bar_cont1_auto_08_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Add data management to Figure 2 code
+.panel1-my_2var_bar_cont1-auto[
+
+```r
+starwars %&gt;%
+  drop_na(hair_color, gender) %&gt;%
+  mutate(hair_color = recode_factor(hair_color,
+                                    "blond" = "blonde",
+                                    "brown, grey" = "multiple",
+                                    "auburn, white" = "multiple",
+                                    "auburn, grey" = "multiple")) %&gt;%
+  ggplot(aes(x = hair_color, fill = gender)) +
+  geom_bar(position = "dodge") +
+  scale_fill_brewer(palette = 'Set1', name = "Gender") +
+  labs(x = "Character Hair Color",
+       y = "Frequency",
+       title = "Hair Color and Gender of Star Wars Characters") +
+  theme_minimal() +
+* coord_flip()
+```
+]
+ 
+.panel2-my_2var_bar_cont1-auto[
+![](index_files/figure-html/my_2var_bar_cont1_auto_09_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-my_2var_bar_cont1-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-my_2var_bar_cont1-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-my_2var_bar_cont1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+count: false
+ 
+## Basic means bar chart
+.panel1-my_2var_bar_means-auto[
+
+```r
+*starwars
+```
+]
+ 
+.panel2-my_2var_bar_means-auto[
+
+```
+# A tibble: 87 x 14
+   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Bigg…    183    84 black      light      brown           24   male  mascu…
+10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+```
+]
+
+---
+count: false
+ 
+## Basic means bar chart
+.panel1-my_2var_bar_means-auto[
 
 ```r
 starwars %&gt;%
@@ -1588,7 +1976,7 @@ starwars %&gt;%
 ```
 ]
  
-.panel2-my_2var_bar_cont_fancy-auto[
+.panel2-my_2var_bar_means-auto[
 
 ```
 # A tibble: 78 x 14
@@ -1612,8 +2000,8 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
+## Basic means bar chart
+.panel1-my_2var_bar_means-auto[
 
 ```r
 starwars %&gt;%
@@ -1622,7 +2010,7 @@ starwars %&gt;%
 ```
 ]
  
-.panel2-my_2var_bar_cont_fancy-auto[
+.panel2-my_2var_bar_means-auto[
 
 ```
 # A tibble: 78 x 14
@@ -1647,154 +2035,69 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
+## Basic means bar chart
+.panel1-my_2var_bar_means-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, gender) %&gt;%
   group_by(gender) %&gt;%
-* summarize(meanHt = mean(height),
-*           sdHt = sd(height))
+* summarize(meanHt = mean(height))
 ```
 ]
  
-.panel2-my_2var_bar_cont_fancy-auto[
+.panel2-my_2var_bar_means-auto[
 
 ```
-# A tibble: 2 x 3
-  gender    meanHt  sdHt
-  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
-1 feminine    165.  23.6
-2 masculine   177.  37.6
+# A tibble: 2 x 2
+  gender    meanHt
+  &lt;chr&gt;      &lt;dbl&gt;
+1 feminine    165.
+2 masculine   177.
 ```
 ]
 
 ---
 count: false
  
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
+## Basic means bar chart
+.panel1-my_2var_bar_means-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, gender) %&gt;%
   group_by(gender) %&gt;%
-  summarize(meanHt = mean(height),
-            sdHt = sd(height)) %&gt;%
+  summarize(meanHt = mean(height)) %&gt;%
 * ggplot(aes(x = gender, y = meanHt))
 ```
 ]
  
-.panel2-my_2var_bar_cont_fancy-auto[
-![](index_files/figure-html/my_2var_bar_cont_fancy_auto_05_output-1.png)&lt;!-- --&gt;
+.panel2-my_2var_bar_means-auto[
+![](index_files/figure-html/my_2var_bar_means_auto_05_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
 count: false
  
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
+## Basic means bar chart
+.panel1-my_2var_bar_means-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, gender) %&gt;%
   group_by(gender) %&gt;%
-  summarize(meanHt = mean(height),
-            sdHt = sd(height)) %&gt;%
+  summarize(meanHt = mean(height)) %&gt;%
   ggplot(aes(x = gender, y = meanHt)) +
-* geom_col(fill = "deeppink")
+* geom_col()
 ```
 ]
  
-.panel2-my_2var_bar_cont_fancy-auto[
-![](index_files/figure-html/my_2var_bar_cont_fancy_auto_06_output-1.png)&lt;!-- --&gt;
-]
-
----
-count: false
- 
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
-
-```r
-starwars %&gt;%
-  drop_na(height, gender) %&gt;%
-  group_by(gender) %&gt;%
-  summarize(meanHt = mean(height),
-            sdHt = sd(height)) %&gt;%
-  ggplot(aes(x = gender, y = meanHt)) +
-  geom_col(fill = "deeppink") +
-* geom_errorbar(aes(ymin = meanHt-sdHt,
-*                   ymax = meanHt+sdHt),
-*               position = position_dodge(width = .9),
-*               width = .2)
-```
-]
- 
-.panel2-my_2var_bar_cont_fancy-auto[
-![](index_files/figure-html/my_2var_bar_cont_fancy_auto_07_output-1.png)&lt;!-- --&gt;
-]
-
----
-count: false
- 
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
-
-```r
-starwars %&gt;%
-  drop_na(height, gender) %&gt;%
-  group_by(gender) %&gt;%
-  summarize(meanHt = mean(height),
-            sdHt = sd(height)) %&gt;%
-  ggplot(aes(x = gender, y = meanHt)) +
-  geom_col(fill = "deeppink") +
-  geom_errorbar(aes(ymin = meanHt-sdHt,
-                    ymax = meanHt+sdHt),
-                position = position_dodge(width = .9),
-                width = .2) +
-* labs(x = "Character Gender",
-*      y = "Mean Height (cm)",
-*      title = "Mean Height (cm) of Star Wars Characters\nby Gender")
-```
-]
- 
-.panel2-my_2var_bar_cont_fancy-auto[
-![](index_files/figure-html/my_2var_bar_cont_fancy_auto_08_output-1.png)&lt;!-- --&gt;
-]
-
----
-count: false
- 
-### Fancy means bar graph
-.panel1-my_2var_bar_cont_fancy-auto[
-
-```r
-starwars %&gt;%
-  drop_na(height, gender) %&gt;%
-  group_by(gender) %&gt;%
-  summarize(meanHt = mean(height),
-            sdHt = sd(height)) %&gt;%
-  ggplot(aes(x = gender, y = meanHt)) +
-  geom_col(fill = "deeppink") +
-  geom_errorbar(aes(ymin = meanHt-sdHt,
-                    ymax = meanHt+sdHt),
-                position = position_dodge(width = .9),
-                width = .2) +
-  labs(x = "Character Gender",
-       y = "Mean Height (cm)",
-       title = "Mean Height (cm) of Star Wars Characters\nby Gender") +
-* theme_minimal(base_size = 14)
-```
-]
- 
-.panel2-my_2var_bar_cont_fancy-auto[
-![](index_files/figure-html/my_2var_bar_cont_fancy_auto_09_output-1.png)&lt;!-- --&gt;
+.panel2-my_2var_bar_means-auto[
+![](index_files/figure-html/my_2var_bar_means_auto_06_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
-.panel1-my_2var_bar_cont_fancy-auto {
+.panel1-my_2var_bar_means-auto {
   color: black;
   width: 49%;
   hight: 32%;
@@ -1802,7 +2105,7 @@ starwars %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel2-my_2var_bar_cont_fancy-auto {
+.panel2-my_2var_bar_means-auto {
   color: black;
   width: 49%;
   hight: 32%;
@@ -1810,7 +2113,7 @@ starwars %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel3-my_2var_bar_cont_fancy-auto {
+.panel3-my_2var_bar_means-auto {
   color: black;
   width: NA%;
   hight: 33%;
@@ -1826,15 +2129,29 @@ starwars %&gt;%
 
 ---
 
-# You Try it!
+## You Try it!
 
-Change the bar graph of the Gender and Height of Star Wars Characters to Gender and Mass with the Figure 3 code in your R Markdown file. First, replace "Height" with "Mass" throughout the code. Make all the changes to labels necessary. Pick a new color and try a different theme.
+* Copy and paste the bar chart code for the Gender and Height of Star Wars Characters to the code chunk for Gender and Mass under the Figure 3 code section in your R Markdown file. 
+
+* Replace "height" with "mass" throughout the code. 
+
+* Add labels for the x and y axes and a title. 
+
+* Use `fill =` inside the parentheses with some color name or number to add a color in the `geom_col()` layer. 
+
+* Add a theme layer with any theme you want to try.
+
+---
+
+## Figure 3 code 
+
+&lt;img src="./this-is-the-way.jpg" width="600" style="display: block; margin: auto;" /&gt;
 
 ---
 
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
@@ -1866,7 +2183,7 @@ count: false
 ---
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
@@ -1899,7 +2216,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
@@ -1934,41 +2251,39 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
 starwars %&gt;%
   drop_na(mass, gender) %&gt;%
   group_by(gender) %&gt;%
-* summarize(meanMass = mean(mass),
-*           sdMass = sd(mass))
+* summarize(meanMass = mean(mass))
 ```
 ]
  
 .panel2-figure_3-auto[
 
 ```
-# A tibble: 2 x 3
-  gender    meanMass sdMass
-  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;
-1 feminine      54.7   8.59
-2 masculine    106.  185.  
+# A tibble: 2 x 2
+  gender    meanMass
+  &lt;chr&gt;        &lt;dbl&gt;
+1 feminine      54.7
+2 masculine    106. 
 ```
 ]
 
 ---
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
 starwars %&gt;%
   drop_na(mass, gender) %&gt;%
   group_by(gender) %&gt;%
-  summarize(meanMass = mean(mass),
-            sdMass = sd(mass)) %&gt;%
+  summarize(meanMass = mean(mass)) %&gt;%
 * ggplot(aes(x = gender, y = meanMass))
 ```
 ]
@@ -1980,17 +2295,16 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
 starwars %&gt;%
   drop_na(mass, gender) %&gt;%
   group_by(gender) %&gt;%
-  summarize(meanMass = mean(mass),
-            sdMass = sd(mass)) %&gt;%
+  summarize(meanMass = mean(mass)) %&gt;%
   ggplot(aes(x = gender, y = meanMass)) +
-* geom_col(fill = "deeppink")
+* geom_col(fill = "dodgerblue2")
 ```
 ]
  
@@ -2001,21 +2315,19 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
 starwars %&gt;%
   drop_na(mass, gender) %&gt;%
   group_by(gender) %&gt;%
-  summarize(meanMass = mean(mass),
-            sdMass = sd(mass)) %&gt;%
+  summarize(meanMass = mean(mass)) %&gt;%
   ggplot(aes(x = gender, y = meanMass)) +
-  geom_col(fill = "deeppink") +
-* geom_errorbar(aes(ymin = meanMass-sdMass,
-*                   ymax = meanMass+sdMass),
-*               position = position_dodge(width = .9),
-*               width = .2)
+  geom_col(fill = "dodgerblue2") +
+* labs(x = "Character Gender",
+*      y = "Mean Mass (kg)",
+*      title = "Star Wars Character Mass by Gender")
 ```
 ]
  
@@ -2026,58 +2338,25 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy means bar graph
+## Figure 3  bar chart option
 .panel1-figure_3-auto[
 
 ```r
 starwars %&gt;%
   drop_na(mass, gender) %&gt;%
   group_by(gender) %&gt;%
-  summarize(meanMass = mean(mass),
-            sdMass = sd(mass)) %&gt;%
+  summarize(meanMass = mean(mass)) %&gt;%
   ggplot(aes(x = gender, y = meanMass)) +
-  geom_col(fill = "deeppink") +
-  geom_errorbar(aes(ymin = meanMass-sdMass,
-                    ymax = meanMass+sdMass),
-                position = position_dodge(width = .9),
-                width = .2) +
-* labs(x = "Character Gender",
-*      y = "Mean Mass (kg)",
-*      title = "Mean Mass (kg) of Star Wars Characters\nby Gender")
+  geom_col(fill = "dodgerblue2") +
+  labs(x = "Character Gender",
+       y = "Mean Mass (kg)",
+       title = "Star Wars Character Mass by Gender") +
+* theme_light()
 ```
 ]
  
 .panel2-figure_3-auto[
 ![](index_files/figure-html/figure_3_auto_08_output-1.png)&lt;!-- --&gt;
-]
-
----
-count: false
- 
-### Fancy means bar graph
-.panel1-figure_3-auto[
-
-```r
-starwars %&gt;%
-  drop_na(mass, gender) %&gt;%
-  group_by(gender) %&gt;%
-  summarize(meanMass = mean(mass),
-            sdMass = sd(mass)) %&gt;%
-  ggplot(aes(x = gender, y = meanMass)) +
-  geom_col(fill = "deeppink") +
-  geom_errorbar(aes(ymin = meanMass-sdMass,
-                    ymax = meanMass+sdMass),
-                position = position_dodge(width = .9),
-                width = .2) +
-  labs(x = "Character Gender",
-       y = "Mean Mass (kg)",
-       title = "Mean Mass (kg) of Star Wars Characters\nby Gender") +
-* theme_minimal(base_size = 14)
-```
-]
- 
-.panel2-figure_3-auto[
-![](index_files/figure-html/figure_3_auto_09_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -2111,12 +2390,292 @@ starwars %&gt;%
 
 
 
+---
+
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+*starwars
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+
+```
+# A tibble: 87 x 14
+   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Bigg…    183    84 black      light      brown           24   male  mascu…
+10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+```
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+* drop_na(height, gender)
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+
+```
+# A tibble: 78 x 14
+   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Bigg…    183    84 black      light      brown           24   male  mascu…
+10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# … with 68 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+```
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, gender) %&gt;%
+* group_by(gender)
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+
+```
+# A tibble: 78 x 14
+# Groups:   gender [2]
+   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Bigg…    183    84 black      light      brown           24   male  mascu…
+10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# … with 68 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+```
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, gender) %&gt;%
+  group_by(gender) %&gt;%
+* summarize(meanHt = mean(height),
+*           sdHt = sd(height))
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+
+```
+# A tibble: 2 x 3
+  gender    meanHt  sdHt
+  &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 feminine    165.  23.6
+2 masculine   177.  37.6
+```
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, gender) %&gt;%
+  group_by(gender) %&gt;%
+  summarize(meanHt = mean(height),
+            sdHt = sd(height)) %&gt;%
+* ggplot(aes(x = gender, y = meanHt))
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+![](index_files/figure-html/my_2var_bar_means_fancy_auto_05_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, gender) %&gt;%
+  group_by(gender) %&gt;%
+  summarize(meanHt = mean(height),
+            sdHt = sd(height)) %&gt;%
+  ggplot(aes(x = gender, y = meanHt)) +
+* geom_col(fill = "deeppink")
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+![](index_files/figure-html/my_2var_bar_means_fancy_auto_06_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, gender) %&gt;%
+  group_by(gender) %&gt;%
+  summarize(meanHt = mean(height),
+            sdHt = sd(height)) %&gt;%
+  ggplot(aes(x = gender, y = meanHt)) +
+  geom_col(fill = "deeppink") +
+* geom_errorbar(aes(ymin = meanHt-sdHt,
+*                   ymax = meanHt+sdHt),
+*               position = position_dodge(width = .9),
+*               width = .2)
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+![](index_files/figure-html/my_2var_bar_means_fancy_auto_07_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, gender) %&gt;%
+  group_by(gender) %&gt;%
+  summarize(meanHt = mean(height),
+            sdHt = sd(height)) %&gt;%
+  ggplot(aes(x = gender, y = meanHt)) +
+  geom_col(fill = "deeppink") +
+  geom_errorbar(aes(ymin = meanHt-sdHt,
+                    ymax = meanHt+sdHt),
+                position = position_dodge(width = .9),
+                width = .2) +
+* labs(x = "Character Gender",
+*      y = "Mean Height (cm)",
+*      title = "Mean Height (cm) of Star Wars Characters\nby Gender")
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+![](index_files/figure-html/my_2var_bar_means_fancy_auto_08_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Fancy means bar chart
+.panel1-my_2var_bar_means_fancy-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, gender) %&gt;%
+  group_by(gender) %&gt;%
+  summarize(meanHt = mean(height),
+            sdHt = sd(height)) %&gt;%
+  ggplot(aes(x = gender, y = meanHt)) +
+  geom_col(fill = "deeppink") +
+  geom_errorbar(aes(ymin = meanHt-sdHt,
+                    ymax = meanHt+sdHt),
+                position = position_dodge(width = .9),
+                width = .2) +
+  labs(x = "Character Gender",
+       y = "Mean Height (cm)",
+       title = "Mean Height (cm) of Star Wars Characters\nby Gender") +
+* theme_minimal(base_size = 14)
+```
+]
+ 
+.panel2-my_2var_bar_means_fancy-auto[
+![](index_files/figure-html/my_2var_bar_means_fancy_auto_09_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.panel1-my_2var_bar_means_fancy-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-my_2var_bar_means_fancy-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-my_2var_bar_means_fancy-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
 
 ---
 
 count: false
  
-### Basic box plot
+## Basic box plot
 .panel1-my_box-auto[
 
 ```r
@@ -2148,7 +2707,7 @@ count: false
 ---
 count: false
  
-### Basic box plot
+## Basic box plot
 .panel1-my_box-auto[
 
 ```r
@@ -2181,7 +2740,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic box plot
+## Basic box plot
 .panel1-my_box-auto[
 
 ```r
@@ -2198,7 +2757,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic box plot
+## Basic box plot
 .panel1-my_box-auto[
 
 ```r
@@ -2248,7 +2807,7 @@ starwars %&gt;%
 
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2280,7 +2839,7 @@ count: false
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2313,7 +2872,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2330,7 +2889,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2349,7 +2908,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2370,7 +2929,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2392,7 +2951,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2417,7 +2976,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2443,7 +3002,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2470,7 +3029,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Super fancy layered box plot
+## Super fancy layered box plot
 .panel1-my_box_fancy-auto[
 
 ```r
@@ -2530,7 +3089,7 @@ starwars %&gt;%
 
 count: false
  
-### Basic scatter plot
+## Basic scatter plot
 .panel1-my_scatter-auto[
 
 ```r
@@ -2562,7 +3121,7 @@ count: false
 ---
 count: false
  
-### Basic scatter plot
+## Basic scatter plot
 .panel1-my_scatter-auto[
 
 ```r
@@ -2595,7 +3154,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic scatter plot
+## Basic scatter plot
 .panel1-my_scatter-auto[
 
 ```r
@@ -2612,7 +3171,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Basic scatter plot
+## Basic scatter plot
 .panel1-my_scatter-auto[
 
 ```r
@@ -2662,7 +3221,7 @@ starwars %&gt;%
 
 count: false
  
-### Fancy scatter plot
+## Fancy scatter plot
 .panel1-my_scatter_fancy-auto[
 
 ```r
@@ -2694,7 +3253,7 @@ count: false
 ---
 count: false
  
-### Fancy scatter plot
+## Fancy scatter plot
 .panel1-my_scatter_fancy-auto[
 
 ```r
@@ -2727,7 +3286,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy scatter plot
+## Fancy scatter plot
 .panel1-my_scatter_fancy-auto[
 
 ```r
@@ -2744,7 +3303,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy scatter plot
+## Fancy scatter plot
 .panel1-my_scatter_fancy-auto[
 
 ```r
@@ -2762,7 +3321,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy scatter plot
+## Fancy scatter plot
 .panel1-my_scatter_fancy-auto[
 
 ```r
@@ -2782,7 +3341,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy scatter plot
+## Fancy scatter plot
 .panel1-my_scatter_fancy-auto[
 
 ```r
@@ -2805,7 +3364,7 @@ starwars %&gt;%
 ---
 count: false
  
-### Fancy scatter plot
+## Fancy scatter plot
 .panel1-my_scatter_fancy-auto[
 
 ```r
@@ -2861,7 +3420,7 @@ starwars %&gt;%
 
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
@@ -2893,7 +3452,7 @@ count: false
 ---
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
@@ -2926,32 +3485,48 @@ starwars %&gt;%
 ---
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, mass) %&gt;%
-* ggplot(aes(x = height, y = mass))
+* filter(mass &lt; 250)
 ```
 ]
  
 .panel2-my_scatter_fancier-auto[
-![](index_files/figure-html/my_scatter_fancier_auto_03_output-1.png)&lt;!-- --&gt;
+
+```
+# A tibble: 58 x 14
+   name  height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Bigg…    183    84 black      light      brown           24   male  mascu…
+10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# … with 48 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
+```
 ]
 
 ---
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, mass) %&gt;%
-  ggplot(aes(x = height, y = mass)) +
-* geom_point(color = "dodgerblue2", shape = 18,
-*            size = 4, alpha = .6)
+  filter(mass &lt; 250) %&gt;%
+* ggplot(aes(x = height, y = mass, label = name))
 ```
 ]
  
@@ -2962,17 +3537,16 @@ starwars %&gt;%
 ---
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, mass) %&gt;%
-  ggplot(aes(x = height, y = mass)) +
-  geom_point(color = "dodgerblue2", shape = 18,
-             size = 4, alpha = .6) +
-* geom_smooth(method = "lm", se = FALSE,
-*             color = "orange", linetype = "dotdash")
+  filter(mass &lt; 250) %&gt;%
+  ggplot(aes(x = height, y = mass, label = name)) +
+* geom_point(color = "dodgerblue2", shape = 18,
+*            size = 4, alpha = .6)
 ```
 ]
  
@@ -2983,20 +3557,18 @@ starwars %&gt;%
 ---
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, mass) %&gt;%
-  ggplot(aes(x = height, y = mass)) +
+  filter(mass &lt; 250) %&gt;%
+  ggplot(aes(x = height, y = mass, label = name)) +
   geom_point(color = "dodgerblue2", shape = 18,
              size = 4, alpha = .6) +
-  geom_smooth(method = "lm", se = FALSE,
-              color = "orange", linetype = "dotdash") +
-* labs(x = "Height (cm)",
-*      y = "Mass (kg)",
-*      title = "Height and Mass of Star Wars Characters")
+* geom_smooth(method = "lm", se = FALSE,
+*             color = "orange", linetype = "dotdash")
 ```
 ]
  
@@ -3007,21 +3579,21 @@ starwars %&gt;%
 ---
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, mass) %&gt;%
-  ggplot(aes(x = height, y = mass)) +
+  filter(mass &lt; 250) %&gt;%
+  ggplot(aes(x = height, y = mass, label = name)) +
   geom_point(color = "dodgerblue2", shape = 18,
              size = 4, alpha = .6) +
   geom_smooth(method = "lm", se = FALSE,
               color = "orange", linetype = "dotdash") +
-  labs(x = "Height (cm)",
-       y = "Mass (kg)",
-       title = "Height and Mass of Star Wars Characters") +
-* theme_bw()
+* labs(x = "Height (cm)",
+*      y = "Mass (kg)",
+*      title = "Height and Mass of Star Wars Characters\n(Excludes Jabba)")
 ```
 ]
  
@@ -3032,26 +3604,53 @@ starwars %&gt;%
 ---
 count: false
  
-### Even fancier scatter plot
+## Even fancier scatter plot (without Jabba)
 .panel1-my_scatter_fancier-auto[
 
 ```r
 starwars %&gt;%
   drop_na(height, mass) %&gt;%
-  ggplot(aes(x = height, y = mass)) +
+  filter(mass &lt; 250) %&gt;%
+  ggplot(aes(x = height, y = mass, label = name)) +
   geom_point(color = "dodgerblue2", shape = 18,
              size = 4, alpha = .6) +
   geom_smooth(method = "lm", se = FALSE,
               color = "orange", linetype = "dotdash") +
   labs(x = "Height (cm)",
        y = "Mass (kg)",
-       title = "Height and Mass of Star Wars Characters") +
-  theme_bw()
+       title = "Height and Mass of Star Wars Characters\n(Excludes Jabba)") +
+* theme_bw(base_size = 14)
 ```
 ]
  
 .panel2-my_scatter_fancier-auto[
 ![](index_files/figure-html/my_scatter_fancier_auto_08_output-1.png)&lt;!-- --&gt;
+]
+
+---
+count: false
+ 
+## Even fancier scatter plot (without Jabba)
+.panel1-my_scatter_fancier-auto[
+
+```r
+starwars %&gt;%
+  drop_na(height, mass) %&gt;%
+  filter(mass &lt; 250) %&gt;%
+  ggplot(aes(x = height, y = mass, label = name)) +
+  geom_point(color = "dodgerblue2", shape = 18,
+             size = 4, alpha = .6) +
+  geom_smooth(method = "lm", se = FALSE,
+              color = "orange", linetype = "dotdash") +
+  labs(x = "Height (cm)",
+       y = "Mass (kg)",
+       title = "Height and Mass of Star Wars Characters\n(Excludes Jabba)") +
+  theme_bw(base_size = 14)
+```
+]
+ 
+.panel2-my_scatter_fancier-auto[
+![](index_files/figure-html/my_scatter_fancier_auto_09_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -3087,6 +3686,10 @@ starwars %&gt;%
 
 ---
 
+## The end
+
+&lt;img src="./yoda-drink.jpg" width="400" style="display: block; margin: auto;" /&gt;
+
 
 &lt;!-- adjust font size in this css code chunk, currently 80 --&gt;
 
@@ -3112,9 +3715,6 @@ code.r.hljs.remark-code:hover{
 }
 &lt;/style&gt;
 
-
-
----
 
 
 
