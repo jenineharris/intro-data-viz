@@ -56,7 +56,7 @@ library(package = "tidyverse")
 
 ## Why are we doing this?
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.width = 600, fig.align='center'}
    knitr::include_graphics('./eda-party.png')
 ```
 
