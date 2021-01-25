@@ -425,7 +425,7 @@ starwars %&gt;%
 
 ---
 
-## You Try it!
+## You try it!
 
 Make a bar chart of the Sex of Star Wars Characters with the Figure 1 code in your R Markdown file.
 
@@ -437,7 +437,7 @@ Edit the code to:
 
 * Add labels for the axes and a title inside the quote marks
 
-* Try another theme, you can find them here: https://ggplot2.tidyverse.org/reference/ggtheme.html
+* try another theme, you can find them here: https://ggplot2.tidyverse.org/reference/ggtheme.html
 
 When you have completed the changes, click the little green arrow on the top right of the code chunk to run the code.
 
@@ -1427,17 +1427,19 @@ starwars %&gt;%
 
 ---
 
-## You Try it!
+## You try it!
 
 Customize the bar chart of the Gender and Hair Color of Star Wars Characters with the Figure 2 code in your R Markdown file.
 
 Edit the code to: 
 
+* Add the gender variable in the appropriate places
+
 * Change the color of the bars by replacing the palette with a different palette found on the &lt;a href = "http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/"&gt;http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/&lt;/a&gt; website (bottom of page)
 
 * Add labels for the axes and a title inside the quote marks
 
-* Try another theme, you can find them here: https://ggplot2.tidyverse.org/reference/ggtheme.html
+* try another theme, you can find them here: https://ggplot2.tidyverse.org/reference/ggtheme.html
 
 When you have completed the changes, click the little green arrow on the top right of the code chunk to run the code.
 
@@ -1488,27 +1490,27 @@ count: false
 
 ```r
 starwars %&gt;%
-* drop_na(species, gender)
+* drop_na(hair_color, gender)
 ```
 ]
  
 .panel2-my_2var_bar_cont-auto[
 
 ```
-# A tibble: 83 x 14
+# A tibble: 78 x 14
    name  height  mass hair_color skin_color eye_color birth_year sex   gender
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
  1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 73 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+ 2 Dart…    202   136 none       white      yellow          41.9 male  mascu…
+ 3 Leia…    150    49 brown      light      brown           19   fema… femin…
+ 4 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+ 5 Beru…    165    75 brown      light      blue            47   fema… femin…
+ 6 Bigg…    183    84 black      light      brown           24   male  mascu…
+ 7 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+ 8 Anak…    188    84 blond      fair       blue            41.9 male  mascu…
+ 9 Wilh…    180    NA auburn, g… fair       blue            64   male  mascu…
+10 Chew…    228   112 brown      unknown    blue           200   male  mascu…
+# … with 68 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;
 ```
 ]
@@ -1521,7 +1523,7 @@ count: false
 
 ```r
 starwars %&gt;%
-  drop_na(species, gender) %&gt;%
+  drop_na(hair_color, gender) %&gt;%
 * ggplot(aes(x = hair_color, fill = gender))
 ```
 ]
@@ -1538,7 +1540,7 @@ count: false
 
 ```r
 starwars %&gt;%
-  drop_na(species, gender) %&gt;%
+  drop_na(hair_color, gender) %&gt;%
   ggplot(aes(x = hair_color, fill = gender)) +
 * geom_bar(position = "dodge")
 ```
@@ -1556,7 +1558,7 @@ count: false
 
 ```r
 starwars %&gt;%
-  drop_na(species, gender) %&gt;%
+  drop_na(hair_color, gender) %&gt;%
   ggplot(aes(x = hair_color, fill = gender)) +
   geom_bar(position = "dodge") +
 * scale_fill_brewer(palette = 'Set1', name = "Gender")
@@ -1575,7 +1577,7 @@ count: false
 
 ```r
 starwars %&gt;%
-  drop_na(species, gender) %&gt;%
+  drop_na(hair_color, gender) %&gt;%
   ggplot(aes(x = hair_color, fill = gender)) +
   geom_bar(position = "dodge") +
   scale_fill_brewer(palette = 'Set1', name = "Gender") +
@@ -1597,7 +1599,7 @@ count: false
 
 ```r
 starwars %&gt;%
-  drop_na(species, gender) %&gt;%
+  drop_na(hair_color, gender) %&gt;%
   ggplot(aes(x = hair_color, fill = gender)) +
   geom_bar(position = "dodge") +
   scale_fill_brewer(palette = 'Set1', name = "Gender") +
@@ -2129,7 +2131,7 @@ starwars %&gt;%
 
 ---
 
-## You Try it!
+## You try it!
 
 * Copy and paste the bar chart code for the Gender and Height of Star Wars Characters to the code chunk for Gender and Mass under the Figure 3 code section in your R Markdown file. 
 
